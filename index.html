@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+</head>
+
+<body>
+    管理No
+    <input type="text" id="kanriNo">
+    <button onclick="openDialog()">開く</button>
+
+    <div id="result"></div>
+    <input type="hidden" id="reloadFlg" value="0">
+
+    <script>
+        function openDialog() {
+            var kanriNo = $("#kanriNo").val();
+            openWindow(kanriNo);
+        }
+
+        function openWindow(kanriNo) {
+            var width = 1000;
+            var height = 700;
+            var locationX = (screen.availWidth - width) / 2;
+            var locationY = (screen.availHeight - height) / 2;
+            var widthinOpt = "menubar=no,width=" + width + ",height=" + height + ",top=" + locationY + ",left=" + locationX;
+
+            var subWindow = window.open('child.html?kanriNo=' + kanriNo, "_blank", widthinOpt);
+
+            $(subWindow).on('unload', function () {
+                setTimeout(function () {
+                    if (!subWindow.closed) return;
+                    closeWindow();
+                }, 10);
+            });
+        }
+
+        function closeWindow() {
+            if ($("#reloadFlg").val() === "1") {
+                location.reload();
+            }
+        }
+    </script>
+</body>
+
+</html>

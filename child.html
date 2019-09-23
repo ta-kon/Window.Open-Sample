@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+</head>
+
+<body>
+    管理No
+    <input type="text" id="kanriNo">
+    <button onclick="send()">送信</button>
+
+    <script>
+        $.urlParam = function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            }
+            return decodeURI(results[1]) || 0;
+        }
+
+        $(function () {
+            var kanriNo = $.urlParam('kanriNo');
+            console.log(kanriNo);
+            $("#kanriNo").val(kanriNo);
+        });
+
+        function send() {
+            window.opener.document.getElementById("result").textContent
+                = document.getElementById("kanriNo").value;
+
+            $(window.opener.document.getElementById("reloadFlg")).val("1");
+        }
+    </script>
+</body>
+
+</html>
